@@ -1,4 +1,4 @@
-package com.emzy.shopex.controller;
+package com.emzy.shopex.exceptions;
 
 import lombok.Builder;
 

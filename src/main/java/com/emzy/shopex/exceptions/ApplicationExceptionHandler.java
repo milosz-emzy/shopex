@@ -1,4 +1,4 @@
-package com.emzy.shopex.controller;
+package com.emzy.shopex.exceptions;
 
 import com.emzy.shopex.util.MapperUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,9 +17,9 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @RestControllerAdvice
 //lowest because it'll be last one called, default is LOWEST_PRECEDENCE
 @Order(Ordered.LOWEST_PRECEDENCE)
-public class GlobalExceptionHandler {
+public class ApplicationExceptionHandler {
 
-    private static final Log log = LogFactory.getLog(GlobalExceptionHandler.class);
+    private static final Log log = LogFactory.getLog(ApplicationExceptionHandler.class);
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> onMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e,

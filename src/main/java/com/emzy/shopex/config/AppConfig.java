@@ -1,6 +1,6 @@
 package com.emzy.shopex.config;
 
-import com.emzy.shopex.controller.ClientZipCodeNotFoundException;
+import com.emzy.shopex.exceptions.ClientZipCodeNotFoundException;
 import com.emzy.shopex.zippo.ZippoClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

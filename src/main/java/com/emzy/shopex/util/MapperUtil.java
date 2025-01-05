@@ -1,6 +1,6 @@
 package com.emzy.shopex.util;
 
-import com.emzy.shopex.controller.ErrorResponse;
+import com.emzy.shopex.exceptions.ErrorResponse;
 import com.emzy.shopex.dto.ItemsResponse;
 import com.emzy.shopex.model.Item;
 import jakarta.servlet.http.HttpServletRequest;
