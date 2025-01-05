@@ -25,4 +25,12 @@ public class MapperUtil {
                 .path(request.getServletPath())
                 .build();
     }
+
+    public static ErrorResponse getErrorResponse(HttpServletRequest request, String message, HttpStatus httpStatus) {
+        return ErrorResponse.builder()
+                .statusCode(httpStatus.name())
+                .messages(List.of(message))
+                .path(request.getServletPath())
+                .build();
+    }
 }
