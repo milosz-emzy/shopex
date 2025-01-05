@@ -1,6 +1,6 @@
 package com.emzy.shopex.controller;
 
-import com.emzy.shopex.dto.FactureResponseDTO;
+import com.emzy.shopex.dto.FactureResponse;
 import com.emzy.shopex.dto.ItemsResponse;
 import com.emzy.shopex.service.ShopService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,21 +42,21 @@ class ShopControllerTest {
     public void shouldPurchaseAndCalculateProperAmount() throws Exception {
         ItemsResponse itemsResponse = getItemResponse("item1", "10.01");
         ItemsResponse itemsResponse1 = getItemResponse("item2", "10.02");
-        FactureResponseDTO factureResponseDTO = FactureResponseDTO.builder()
+        FactureResponse factureResponse = FactureResponse.builder()
                 .items(List.of(itemsResponse, itemsResponse1))
                 .amount(new BigDecimal("20.03"))
                 .build();
 
-        Mockito.when(shopService.purchase(List.of(1, 2))).thenReturn(factureResponseDTO);
+        Mockito.when(shopService.purchase(List.of(1, 2))).thenReturn(factureResponse);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/shop/purchase")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(List.of(1, 2))))
                 .andExpect(status().isCreated())
                 .andReturn();
-        FactureResponseDTO response = objectMapper.readValue(result.getResponse().getContentAsString(), FactureResponseDTO.class);
+        FactureResponse response = objectMapper.readValue(result.getResponse().getContentAsString(), FactureResponse.class);
 
-        Assertions.assertEquals(factureResponseDTO.getAmount(), response.getAmount());
+        Assertions.assertEquals(factureResponse.getAmount(), response.getAmount());
         Assertions.assertEquals("item1", response.getItems().get(0).getName());
         Assertions.assertEquals("item2", response.getItems().get(1).getName());
     }

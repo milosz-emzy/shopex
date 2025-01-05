@@ -1,5 +1,6 @@
 package com.emzy.shopex.dto;
 
+import com.emzy.shopex.model.ItemSize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,4 +16,5 @@ public class ItemsResponse {
 
     private String name;
     private BigDecimal price;
+    private ItemSize size;
 }

@@ -1,6 +1,6 @@
 package com.emzy.shopex.service;
 
-import com.emzy.shopex.dto.FactureResponseDTO;
+import com.emzy.shopex.dto.FactureResponse;
 import com.emzy.shopex.model.Item;
 import com.emzy.shopex.repository.ItemRepository;
 import com.emzy.shopex.util.MapperUtil;
@@ -20,7 +20,7 @@ public class ShopService {
         this.itemRepository = itemRepository;
     }
 
-    public FactureResponseDTO purchase(List<Integer> itemsId) {
+    public FactureResponse purchase(List<Integer> itemsId) {
         List<Item> items = itemRepository.findAllById(itemsId);
 
         BigDecimal totalAmount = BigDecimal.ZERO;
@@ -29,7 +29,7 @@ public class ShopService {
 
         }
 
-        return FactureResponseDTO.builder()
+        return FactureResponse.builder()
                 .items(MapperUtil.mapToItemsResponse(items))
                 .amount(totalAmount)
                 .build();

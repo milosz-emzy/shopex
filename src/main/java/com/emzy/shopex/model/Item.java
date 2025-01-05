@@ -1,7 +1,10 @@
 package com.emzy.shopex.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -21,4 +24,8 @@ public class Item {
 
     @Column(precision = 11, scale = 2)
     private BigDecimal price;
+
+    @Enumerated(EnumType.STRING)
+    private ItemSize size;
+
 }

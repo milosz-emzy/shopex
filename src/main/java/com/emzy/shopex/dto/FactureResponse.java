@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class FactureResponseDTO {
+public class FactureResponse {
 
     private List<ItemsResponse> items;
     private BigDecimal amount;

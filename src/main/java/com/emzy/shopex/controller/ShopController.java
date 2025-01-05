@@ -1,7 +1,7 @@
 package com.emzy.shopex.controller;
 
 
-import com.emzy.shopex.dto.FactureResponseDTO;
+import com.emzy.shopex.dto.FactureResponse;
 import com.emzy.shopex.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,9 +25,9 @@ public class ShopController {
     }
 
     @PostMapping("/purchase")
-    public ResponseEntity<FactureResponseDTO> purchaseItems(@RequestBody List<Integer> itemsId) {
-        FactureResponseDTO factureResponseDTO = shopService.purchase(itemsId);
+    public ResponseEntity<FactureResponse> purchaseItems(@RequestBody List<Integer> itemsId) {
+        FactureResponse factureResponse = shopService.purchase(itemsId);
 
-        return new ResponseEntity<>(factureResponseDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(factureResponse, HttpStatus.CREATED);
     }
 }

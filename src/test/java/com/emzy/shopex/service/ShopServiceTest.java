@@ -1,6 +1,6 @@
 package com.emzy.shopex.service;
 
-import com.emzy.shopex.dto.FactureResponseDTO;
+import com.emzy.shopex.dto.FactureResponse;
 import com.emzy.shopex.model.Item;
 import com.emzy.shopex.repository.ItemRepository;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class ShopServiceTest {
@@ -38,9 +38,9 @@ class ShopServiceTest {
 
         Mockito.when(itemRepository.findAllById(List.of(1, 2))).thenReturn(List.of(item1, item2));
 
-        FactureResponseDTO factureResponseDTO = shopService.purchase(List.of(1, 2));
+        FactureResponse factureResponse = shopService.purchase(List.of(1, 2));
 
-        assertEquals(factureResponseDTO.getAmount(), totalAmount);
+        assertEquals(factureResponse.getAmount(), totalAmount);
     }
 
 }
