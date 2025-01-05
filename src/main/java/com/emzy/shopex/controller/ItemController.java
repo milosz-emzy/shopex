@@ -32,6 +32,13 @@ public class ItemController {
 
         return new ResponseEntity<>(itemsResponse, HttpStatus.OK);
     }
+    
+    @GetMapping("/sortedByPrice")
+    public ResponseEntity<List<ItemsResponse>> sortedByPrice(@RequestParam Sort.Direction sortDirection) {
+            List<Item> items = itemService.getPriceSortedItemsByDirection(sortDirection);
 
+            List<ItemsResponse> itemsResponse = MapperUtil.mapToItemsResponse(items);
 
+            return new ResponseEntity<>(itemsResponse, HttpStatus.OK);
+    }
 }

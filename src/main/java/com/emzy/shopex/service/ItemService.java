@@ -30,4 +30,8 @@ public class ItemService {
 
         return itemRepository.findAll(example);
     }
+
+    public List<Item> getPriceSortedItemsByDirection(Sort.Direction sortDirection) {
+        return itemRepository.findAll(Sort.by(sortDirection, "price"));
+    }
 }
