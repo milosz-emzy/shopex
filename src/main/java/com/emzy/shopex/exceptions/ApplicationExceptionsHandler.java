@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
-//lowest because it'll be last one called, default is LOWEST_PRECEDENCE
 @Order(Ordered.LOWEST_PRECEDENCE)
-public class ApplicationExceptionHandler {
+public class ApplicationExceptionsHandler {
 
-    private static final Log log = LogFactory.getLog(ApplicationExceptionHandler.class);
+    private static final Log log = LogFactory.getLog(ApplicationExceptionsHandler.class);
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> onMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e,
