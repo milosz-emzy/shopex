@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "name": "item3",
+      "price": 0.7,
+      "size": "L"
+    },
+    {
+      "name": "item4",
+      "price": 11.3,
+      "size": "XL"
+    },
+    {
+      "name": "item2",
+      "price": 14.14,
+      "size": "M"
+    },
+    {
+      "name": "item1",
+      "price": 15.16,
+      "size": "S"
+    }
+  ]
+}
