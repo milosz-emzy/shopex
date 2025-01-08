@@ -3,8 +3,8 @@ package com.emzy.shopex.exceptions;
 import com.emzy.shopex.util.MapperUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -18,7 +18,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class ApplicationExceptionsHandler {
 
-    private static final Log log = LogFactory.getLog(ApplicationExceptionsHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(ApplicationExceptionsHandler.class);
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> onMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e,
@@ -31,7 +31,7 @@ public class ApplicationExceptionsHandler {
                 + "'";
         ErrorResponse errorResponse = MapperUtil.getErrorResponse(request, message);
 
-        log.error(errorResponse);
+        log.error(errorResponse.toString());
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
@@ -39,7 +39,7 @@ public class ApplicationExceptionsHandler {
     public ResponseEntity<Object> onConstraintViolationException(ConstraintViolationException e, HttpServletRequest request) {
         ErrorResponse errorResponse = MapperUtil.getErrorResponse(request, e.getMessage());
 
-        log.error(errorResponse);
+        log.error(errorResponse.toString());
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
@@ -47,7 +47,7 @@ public class ApplicationExceptionsHandler {
     public ResponseEntity<ErrorResponse> onZipCodeNotFoundException(ClientZipCodeNotFoundException e, HttpServletRequest request) {
         ErrorResponse errorResponse = MapperUtil.getErrorResponse(request, e.getMessage(), HttpStatus.NOT_FOUND);
 
-        log.error(errorResponse);
+        log.error(errorResponse.toString());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }

@@ -13,4 +13,13 @@ public record ErrorResponse(
     @Builder
     public ErrorResponse {
     }
+
+    @Override
+    public String toString() {
+        return "ErrorResponse{" +
+                "statusCode='" + statusCode + '\'' +
+                ", path='" + path + '\'' +
+                ", messages=" + messages +
+                '}';
+    }
 }
