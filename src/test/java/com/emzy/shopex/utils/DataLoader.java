@@ -1,4 +1,4 @@
-package com.emzy.shopex.loader;
+package com.emzy.shopex.utils;
 
 import com.emzy.shopex.dto.ItemsResponse;
 import com.emzy.shopex.model.ItemSize;
@@ -14,16 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DataLoaderTest {
+public class DataLoader {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Test
-    void shouldReadItems() {
-        readItemsFromFile();
-    }
-
-    public List<ItemsResponse> readItemsFromFile() {
+    public static List<ItemsResponse> readItemsFromFile() {
         JsonNode jsonNode;
         List<ItemsResponse> items = new ArrayList<>();
         try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/items.json")) {
@@ -43,7 +38,7 @@ public class DataLoaderTest {
         return items;
     }
 
-    private ItemsResponse createItemFromNode(JsonNode itemNode) {
+    private static ItemsResponse createItemFromNode(JsonNode itemNode) {
         return ItemsResponse.builder()
                 .name(itemNode.get("name").asText())
                 .size(ItemSize.valueOf(itemNode.get("size").asText()))
