@@ -1,0 +1,34 @@
+---
+services:
+  db:
+    image: postgres:16.6-alpine
+    container_name: db
+    environment:
+      - POSTGRES_DB=shopex
+      - POSTGRES_USER=emzy
+      - POSTGRES_PASSWORD=password
+
+  shopex:
+    build: .
+    container_name: shopex
+    ports:
+      - "8282:8080"
+    depends_on:
+      - db
+    environment:
+      - PG_HOST=db
+      - PG_PORT=5432
+      - PG_USER=emzy
+      - PG_PASSWORD=password
+
+  pgadmin:
+    container_name: sessionz_pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@localhost.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 5050
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - '5050:5050'
