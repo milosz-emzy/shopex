@@ -5,6 +5,8 @@ import com.emzy.shopex.model.Item;
 import com.emzy.shopex.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +35,9 @@ public class ItemService {
 
     public List<Item> getPriceSortedItemsByDirection(Sort.Direction sortDirection) {
         return itemRepository.findAll(Sort.by(sortDirection, "price"));
+    }
+
+    public Page<Item> findAll(Pageable pageable) {
+        return itemRepository.findAll(pageable);
     }
 }

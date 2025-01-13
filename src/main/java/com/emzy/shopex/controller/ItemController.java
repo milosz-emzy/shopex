@@ -6,6 +6,8 @@ import com.emzy.shopex.model.Item;
 import com.emzy.shopex.service.ItemService;
 import com.emzy.shopex.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,11 @@ public class ItemController {
         List<ItemsResponse> itemsResponse = MapperUtil.mapToItemsResponse(items);
 
         return new ResponseEntity<>(itemsResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    public Page<Item> listItems(final Pageable pageable) {
+        return itemService.findAll(pageable);
     }
     
     @GetMapping("/sortedByPrice")
