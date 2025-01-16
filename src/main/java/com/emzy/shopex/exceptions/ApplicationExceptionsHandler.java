@@ -1,6 +1,7 @@
 package com.emzy.shopex.exceptions;
 
 import com.emzy.shopex.util.MapperUtil;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -45,6 +46,14 @@ public class ApplicationExceptionsHandler {
 
     @ExceptionHandler(value = ClientZipCodeNotFoundException.class)
     public ResponseEntity<ErrorResponse> onZipCodeNotFoundException(ClientZipCodeNotFoundException e, HttpServletRequest request) {
+        ErrorResponse errorResponse = MapperUtil.getErrorResponse(request, e.getMessage(), HttpStatus.NOT_FOUND);
+
+        log.error(errorResponse.toString());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> onEntityNotFoundException(EntityNotFoundException e, HttpServletRequest request) {
         ErrorResponse errorResponse = MapperUtil.getErrorResponse(request, e.getMessage(), HttpStatus.NOT_FOUND);
 
         log.error(errorResponse.toString());

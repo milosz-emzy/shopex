@@ -1,8 +1,10 @@
 package com.emzy.shopex.util;
 
+import com.emzy.shopex.dto.WarehouseItems;
 import com.emzy.shopex.exceptions.ErrorResponse;
 import com.emzy.shopex.dto.ItemsResponse;
 import com.emzy.shopex.model.Item;
+import com.emzy.shopex.model.Warehouse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 
@@ -31,6 +33,13 @@ public class MapperUtil {
                 .statusCode(httpStatus.name())
                 .messages(List.of(message))
                 .path(request.getServletPath())
+                .build();
+    }
+
+    public static WarehouseItems mapToWarehouseItems(Warehouse warehouse, List<Item> items) {
+        return WarehouseItems.builder()
+                .warehouse(warehouse)
+                .items(items)
                 .build();
     }
 }
