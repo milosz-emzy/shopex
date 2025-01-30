@@ -4,7 +4,6 @@ import com.emzy.shopex.dto.FactureResponse;
 import com.emzy.shopex.dto.ItemsResponse;
 import com.emzy.shopex.service.ShopService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -21,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -56,9 +56,8 @@ class ShopControllerTest {
                 .andReturn();
         FactureResponse response = objectMapper.readValue(result.getResponse().getContentAsString(), FactureResponse.class);
 
-        Assertions.assertEquals(factureResponse.getAmount(), response.getAmount());
-        Assertions.assertEquals("item1", response.getItems().get(0).getName());
-        Assertions.assertEquals("item2", response.getItems().get(1).getName());
+        assertThat(response.getAmount()).isEqualTo(factureResponse.getAmount());
+        assertThat(response.getItems()).usingRecursiveComparison().isEqualTo(factureResponse.getItems());
     }
 
     private static ItemsResponse getItemResponse(String item1, String val) {

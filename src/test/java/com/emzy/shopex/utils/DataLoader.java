@@ -5,7 +5,6 @@ import com.emzy.shopex.model.ItemSize;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +44,4 @@ public class DataLoader {
                 .price(new BigDecimal(itemNode.get("price").asText()))
                 .build();
     }
-
-
 }
