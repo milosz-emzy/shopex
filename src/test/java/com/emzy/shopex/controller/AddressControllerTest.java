@@ -4,7 +4,6 @@ import com.emzy.shopex.zippo.ZippoClient;
 import com.emzy.shopex.zippo.model.Place;
 import com.emzy.shopex.zippo.model.ZippoResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -20,6 +19,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @WebMvcTest(controllers = AddressController.class)
 @AutoConfigureMockMvc
@@ -60,6 +61,7 @@ class AddressControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         ZippoResponse response = objectMapper.readValue(result.getResponse().getContentAsString(), ZippoResponse.class);
-        Assertions.assertEquals(country, response.country());
+
+        assertThat(response.country()).isEqualTo(country);
     }
 }

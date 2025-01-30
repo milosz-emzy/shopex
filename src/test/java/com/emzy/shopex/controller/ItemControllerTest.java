@@ -6,7 +6,6 @@ import com.emzy.shopex.service.ItemService;
 import com.emzy.shopex.utils.DataProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -21,8 +20,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Comparator;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = ItemController.class)
@@ -39,7 +40,7 @@ class ItemControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    void sortedByPrice() throws Exception {
+    void sortedAscendingByPrice() throws Exception {
         String asc = "ASC";
         Mockito.when(itemService.getPriceSortedItemsByDirection(Sort.Direction.fromString(asc))).thenReturn(DataProvider.getItems());
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/items/sortedByPrice")
@@ -50,10 +51,8 @@ class ItemControllerTest {
         String contentAsString = result.getResponse().getContentAsString();
         List<ItemsResponse> itemsResponses = objectMapper.readValue(contentAsString, collectionType);
 
-        Assertions.assertEquals(itemsResponses.get(0).getName(), DataProvider.getItems().get(0).getName());
-        Assertions.assertEquals(itemsResponses.get(1).getName(), DataProvider.getItems().get(1).getName());
-        Assertions.assertEquals(-1, itemsResponses.get(0).getPrice().compareTo(itemsResponses.get(1).getPrice()));
-
+        assertThat(itemsResponses).usingRecursiveComparison().isEqualTo(DataProvider.getItems());
+        assertThat(itemsResponses).map(ItemsResponse::getPrice).isSortedAccordingTo(Comparator.naturalOrder());
     }
 
     @Test
@@ -62,7 +61,9 @@ class ItemControllerTest {
                         .param("sortDirection", "incorrect_sort_direction_value"))
                 .andExpect(status().isBadRequest())
                 .andReturn();
+
         ErrorResponse errorResponse = objectMapper.readValue(result.getResponse().getContentAsString(), ErrorResponse.class);
-        Assertions.assertEquals(errorResponse.statusCode(), HttpStatus.BAD_REQUEST.name());
+
+        assertThat(errorResponse.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.name());
     }
 }

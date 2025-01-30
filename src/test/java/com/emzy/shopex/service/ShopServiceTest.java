@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class ShopServiceTest {
@@ -40,7 +40,7 @@ class ShopServiceTest {
 
         FactureResponse factureResponse = shopService.purchase(List.of(1, 2));
 
-        assertEquals(factureResponse.getAmount(), totalAmount);
+        assertThat(factureResponse.getAmount()).isEqualTo(totalAmount);
     }
 
 }
