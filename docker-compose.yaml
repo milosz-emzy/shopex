@@ -1,8 +1,13 @@
 ---
 services:
-  db:
+  postgres:
     image: postgres:16.6-alpine
     container_name: db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     environment:
       - POSTGRES_DB=shopex
       - POSTGRES_USER=emzy
@@ -14,7 +19,7 @@ services:
     ports:
       - "8282:8080"
     depends_on:
-      - db
+      - postgres
     environment:
       - PG_HOST=db
       - PG_PORT=5432
@@ -22,6 +27,9 @@ services:
       - PG_PASSWORD=password
 
   pgadmin:
+    depends_on:
+      postgres:
+        condition: service_healthy
     container_name: sessionz_pgadmin
     image: dpage/pgadmin4:latest
     environment:
@@ -32,3 +40,10 @@ services:
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
     ports:
       - '5050:5050'
+    volumes:
+      - ./docker_pgadmin_servers.json:/pgadmin4/servers.json
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - "/bin/echo 'postgres:5432:*:emzy:password' > /tmp/pgpassfile && chmod 600 /tmp/pgpassfile && /entrypoint.sh"
+
