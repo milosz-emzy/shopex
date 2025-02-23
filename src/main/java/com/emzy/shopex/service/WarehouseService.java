@@ -29,8 +29,7 @@ public class WarehouseService {
         var warehouse = warehouseRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Warehouse id: " + id + " has been not found")
         );
-        var items = itemRepository.findByWarehouseId(id);
 
-        return MapperUtil.mapToWarehouseItems(warehouse, items);
+        return MapperUtil.mapToWarehouseItems(warehouse, warehouse.getItems());
     }
 }

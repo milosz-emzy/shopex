@@ -39,13 +39,12 @@ public class ItemController {
     public Page<Item> listItems(final Pageable pageable) {
         return itemService.findAll(pageable);
     }
-    
+
     @GetMapping("/sortedByPrice")
     public ResponseEntity<List<ItemsResponse>> sortedByPrice(@RequestParam Sort.Direction sortDirection) {
-            List<Item> items = itemService.getPriceSortedItemsByDirection(sortDirection);
+        List<Item> items = itemService.getPriceSortedItemsByDirection(sortDirection);
+        List<ItemsResponse> itemsResponse = MapperUtil.mapToItemsResponse(items);
 
-            List<ItemsResponse> itemsResponse = MapperUtil.mapToItemsResponse(items);
-
-            return new ResponseEntity<>(itemsResponse, HttpStatus.OK);
+        return new ResponseEntity<>(itemsResponse, HttpStatus.OK);
     }
 }

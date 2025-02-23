@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -19,5 +21,10 @@ public class Warehouse {
     private Integer id;
 
     private String name;
+
+    //default FetchType.LAZY;
+    @OneToMany()
+    @JoinColumn(name = "warehouse_id")
+    private List<Item> items;
 
 }

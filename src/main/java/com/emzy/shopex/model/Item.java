@@ -27,9 +27,4 @@ public class Item {
 
     @Enumerated(EnumType.STRING)
     private ItemSize size;
-
-    @ManyToOne()
-    @JoinColumn(name = "warehouse_id")
-    private Warehouse warehouse;
-
 }
